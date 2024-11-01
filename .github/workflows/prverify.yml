@@ -17,3 +17,5 @@ jobs:
        run: dotnet build --configuration Release
      - name: Run Unit Tests
        run : dotnet test --configuration Release --no-build
+     - name: Validate Format
+       run: dotnet format -v detailed --verify-no-changes
