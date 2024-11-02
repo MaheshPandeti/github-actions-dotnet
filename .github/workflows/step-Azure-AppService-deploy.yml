@@ -1,0 +1,41 @@
+name: "Step - Deploy"
+on:
+  workflow_call:
+    inputs:
+      env:
+        required: true
+        type: string
+      artifactname:
+        required: true
+        type: string
+    secrets:
+      AZURE_CLIENT_ID:
+        required: true
+      AZURE_TENANT_ID:
+        required: true
+      AZURE_SUBSCRIPTION_ID:
+        required: true
+      APP_NAME:
+        required: true
+jobs:
+  deploy:
+    name: Deploying to  ${{ inputs.env }}
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.env }}
+    steps:
+     - name: Download Artifacts
+       uses: actions/download-artifact@v4
+       with:
+         name: dometrain-artifact
+         path: artifacts2/
+     - name: Azure Login
+       uses: azure/login@v2
+       with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+     - name: 'Deploy to azure app service.'
+       uses: azure/webapps-deploy@v2
+       with: 
+          app-name: ${{ secrets.APP_NAME }}
+          package: artifacts2/
