@@ -26,7 +26,7 @@ jobs:
      - name: Download Artifacts
        uses: actions/download-artifact@v4
        with:
-         name: ${{ input.artifactname }}
+         name: ${{ inputs.artifactname }}
          path: artifacts2/
      - name: Azure Login
        uses: azure/login@v2
