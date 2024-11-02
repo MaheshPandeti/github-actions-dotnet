@@ -27,47 +27,16 @@ jobs:
         name: dometrain-artifact
         path: artifacts/
   Deploy_dev:
-    name: Deploy dev
-    runs-on: ubuntu-latest
+    name: Deploy Dev
     needs: build
-    environment: dev
-
-    steps:
-     - name: Download Artifacts
-       uses: actions/download-artifact@v4
-       with:
-         name: dometrain-artifact
-         path: artifacts2/
-     - name: Azure Login
-       uses: azure/login@v2
-       with:
-        client-id: ${{secrets.AZURE_CLIENT_ID}}
-        tenant-id: ${{secrets.AZURE_TENANT_ID}}
-        subscription-id: ${{secrets.AZURE_SUBSCRIPTION_ID}}
-     - name: 'Deploy to azure app service.'
-       uses: azure/webapps-deploy@v2
-       with: 
-          app-name: app-mahedome-wus 
-          package: artifacts2/
+    uses: ./.github/workflows/step-deploy.yml
+    with:
+      env: dev
+    secrets: inherit
   Deploy_prod:
-    name: Deploy Production
-    runs-on: ubuntu-latest
+    name: Deploy Prod
     needs: Deploy_dev
-    environment: prod
-    steps:
-     - name: Download Artifacts
-       uses: actions/download-artifact@v4
-       with:
-         name: dometrain-artifact
-         path: artifacts2/
-     - name: Azure Login
-       uses: azure/login@v2
-       with:
-        client-id: ${{secrets.AZURE_CLIENT_ID}}
-        tenant-id: ${{secrets.AZURE_TENANT_ID}}
-        subscription-id: ${{secrets.AZURE_SUBSCRIPTION_ID}}
-     - name: 'Deploy to azure app service.'
-       uses: azure/webapps-deploy@v2
-       with: 
-          app-name: app-mahedome-wus-prd 
-          package: artifacts2/
+    uses: ./.github/workflows/step-deploy.yml
+    with:
+      env: prod
+    secrets: inherit
