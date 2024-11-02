@@ -7,7 +7,7 @@ permissions:
    contents: read
 jobs:
   build:
-    name: CI
+    name: CI- (Continous integration)
     runs-on: ubuntu-latest
 
     steps:
@@ -24,19 +24,21 @@ jobs:
      - name: Upload Artifact
        uses: actions/upload-artifact@v4
        with:
-        name: dometrain-artifact
+        name: dometrainapp-artifact
         path: artifacts/
   Deploy_dev:
-    name: Deploy Dev
+    name: Deploy
     needs: build
-    uses: ./.github/workflows/step-deploy.yml
+    uses: MaheshPandeti/github-actions-dotnet/.github/workflows/step-Azure-AppService-deploy.yml@main
     with:
       env: dev
+      artifactname: dometrainapp-artifact
     secrets: inherit
   Deploy_prod:
-    name: Deploy Prod
+    name: Deploy
     needs: Deploy_dev
-    uses: ./.github/workflows/step-deploy.yml
+    uses: MaheshPandeti/github-actions-dotnet/.github/workflows/step-Azure-AppService-deploy.yml@main
     with:
       env: prod
+      artifactname: dometrainapp-artifact
     secrets: inherit

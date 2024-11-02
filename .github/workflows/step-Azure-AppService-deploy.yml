@@ -5,6 +5,9 @@ on:
       env:
         required: true
         type: string
+      artifactname:
+        required: true
+        type: string
     secrets:
       AZURE_CLIENT_ID:
         required: true
@@ -16,7 +19,7 @@ on:
         required: true
 jobs:
   deploy:
-    name: Deploy ${{ inputs.env }}
+    name: Deploying to  ${{ inputs.env }}
     runs-on: ubuntu-latest
     environment: ${{ inputs.env }}
     steps:
