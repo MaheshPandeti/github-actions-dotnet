@@ -50,7 +50,7 @@ jobs:
           app-name: app-mahedome-wus 
           package: artifacts2/
   Deploy_prod:
-    name: Deploy dev
+    name: Deploy Production
     runs-on: ubuntu-latest
     needs: Deploy_dev
     environment: prod
