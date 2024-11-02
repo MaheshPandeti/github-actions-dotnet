@@ -27,7 +27,7 @@ jobs:
         name: dometrainapp-artifact
         path: artifacts/
   Deploy_dev:
-    name: Deploy
+    name: Deploy dev
     needs: build
     uses: MaheshPandeti/github-actions-dotnet/.github/workflows/step-Azure-AppService-deploy.yml@main
     with:
@@ -35,7 +35,7 @@ jobs:
       artifactname: dometrainapp-artifact
     secrets: inherit
   Deploy_prod:
-    name: Deploy
+    name: Deploy prod
     needs: Deploy_dev
     uses: MaheshPandeti/github-actions-dotnet/.github/workflows/step-Azure-AppService-deploy.yml@main
     with:
